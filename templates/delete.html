@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>게시판 - 삭제</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar navbar-dark bg-dark shadow-sm mb-3">
+        <div class="container d-flex justify-content-between">
+          <a href="/" class="navbar-brand d-flex align-items-center">
+            <strong>게시판</strong>
+          </a>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">게시글 삭제</h5>
+          <p class="card-text">정말로 이 게시글을 삭제하시겠습니까?</p>
+          <form id="delete-form" action="/post/delete/{{ board.id }}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="_method" value="delete" />
+            <button id="delete-btn" type="submit" class="btn btn-danger">삭제</button>
+            <a class="btn btn-secondary" href="/post/{{ board.id }}" role="button">취소</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
+
