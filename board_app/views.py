@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from .forms import BoardForm
 from .models import Board
 
 # Create your views here.
@@ -9,16 +10,18 @@ def index(request):
     boards = {'boards': Board.objects.all()}
     return render(request, 'list.html', boards)
 
+
 def post(request):
     if request.method == "POST":
-        author = request.POST['author']
-        title = request.POST['title']
-        content = request.POST['content']
-        board = Board(author=author, title=title, content=content)
-        board.save()
-        return HttpResponseRedirect(reverse('index'))
+        form = BoardForm(request.POST, request.FILES)
+        if form.is_valid():
+            board = form.save()
+            return HttpResponseRedirect(reverse('index'))
     else:
-        return render(request, 'post.html')
+        form = BoardForm()
+
+    return render(request, 'post.html', {'form': form})
+
 
 def detail(request, id):
     try:

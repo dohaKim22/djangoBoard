@@ -24,6 +24,9 @@
             <small class="text-muted">{{ board.created_date | date:"Y-m-d h:i" }}</small>
           </p>
           <p class="card-text">{{ board.content }}</p>
+          {% if board.image %}
+            <img src="{{ board.image.url }}" alt="게시글 이미지">
+          {% endif %}
         </div>
       </div>
       <div class="row mt-3">
@@ -32,15 +35,14 @@
           <a class="btn btn-info" href="/post/edit/{{ board.id }}" role="button">수정</a>
         </div>
        <div class="col-auto">
-  <form id="delete-form" action="{% url 'delete' board.id %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="_method" value="delete" />
-    <button id="delete-btn" type="submit" class="btn btn-danger">삭제</button>
-  </form>
-      </div>
+         <form id="delete-form" action="{% url 'delete' board.id %}" method="post">
+           {% csrf_token %}
+           <input type="hidden" name="_method" value="delete" />
+           <button id="delete-btn" type="submit" class="btn btn-danger">삭제</button
+         </form>
       </div>
     </div>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-  </body>
+  </div>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
 </html>
-
